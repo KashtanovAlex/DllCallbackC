@@ -14,10 +14,10 @@
 extern "C"
 {
     typedef void (*PrintFN)();
-    typedef void (*PrintIntFN)(int);
+    typedef void (*PrintIntFN)(int, int);
 
     std::function<void()> functionBest;
-    std::function<void(int)> printInt;
+    std::function<void(int, int)> printInt;
 
     /// Exposed in script modules to return the script module revision hash.
     WH_SCRIPT_API char const* GetScriptRevisionHash()
@@ -41,16 +41,22 @@ extern "C"
             printf("!functionBest\n");
             return;
         }
+
+        printf("Print\n");
+
         functionBest();
     }
 
-    WH_SCRIPT_API void PrintValue(int value)
+    WH_SCRIPT_API void PrintValue(int value, int value1)
     {
         if (!printInt)
         {
             printf("!printInt\n");
             return;
         }
-        printInt(value);
+
+        printf("PrintValue %u/%u\n", value, value1);
+
+        printInt(value, value1);
     }
 } // extern "C"
